@@ -21,33 +21,33 @@ import javax.persistence.TemporalType;
 import com.ericosouza.pontointeligente.api.enums.TipoEnum;
 
 @Entity
-@Table(name="lancamento")
-public class Lancamento implements Serializable{
+@Table(name = "lancamento")
+public class Lancamento implements Serializable {
 
 	private static final long serialVersionUID = 951399590397733531L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="data", nullable=false)
+	@Column(name = "data", nullable = false)
 	private Date data;
 
-	@Column(name="descricao", nullable=true)
-	private String descricacao;
+	@Column(name = "descricao", nullable = true)
+	private String descricao;
 
-	@Column(name="localizacao", nullable=true)
+	@Column(name = "localizacao", nullable = true)
 	private String localizacao;
 
-	@Column(name="data_criacao", nullable=false)
+	@Column(name = "data_criacao", nullable = false)
 	private Date dataCriacao;
 
-	@Column(name="data_atualizacao", nullable=false)
+	@Column(name = "data_atualizacao", nullable = false)
 	private Date dataAtualizacao;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="tipo", nullable=false)
+	@Column(name = "tipo", nullable = false)
 	private TipoEnum tipo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -72,12 +72,12 @@ public class Lancamento implements Serializable{
 		this.data = data;
 	}
 
-	public String getDescricacao() {
-		return this.descricacao;
+	public String getDescricao() {
+		return this.descricao;
 	}
 
-	public void setDescricacao(String descricacao) {
-		this.descricacao = descricacao;
+	public void setDescricao(String descricacao) {
+		this.descricao = descricacao;
 	}
 
 	public String getLocalizacao() {
@@ -134,6 +134,6 @@ public class Lancamento implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Lancamento [id=" + this.id + ", data=" + this.data + ", descricacao=" + this.descricacao + ", localizacao=" + this.localizacao + ", dataCriacao=" + this.dataCriacao + ", dataAtualizacao=" + this.dataAtualizacao + ", tipo=" + this.tipo + ", funcionario=" + this.funcionario + "]";
+		return "Lancamento [id=" + this.id + ", data=" + this.data + ", descricao=" + this.descricao + ", localizacao=" + this.localizacao + ", dataCriacao=" + this.dataCriacao + ", dataAtualizacao=" + this.dataAtualizacao + ", tipo=" + this.tipo + ", funcionario=" + this.funcionario + "]";
 	}
 }

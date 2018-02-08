@@ -25,50 +25,50 @@ import javax.persistence.Transient;
 import com.ericosouza.pontointeligente.api.enums.PerfilEnum;
 
 @Entity
-@Table(name="funcionario")
-public class Funcionario implements Serializable{
+@Table(name = "funcionario")
+public class Funcionario implements Serializable {
 
 	private static final long serialVersionUID = -1495713901360404582L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name="nome", nullable=false)
+	@Column(name = "nome", nullable = false)
 	private String nome;
 
-	@Column(name="email", nullable=false)
+	@Column(name = "email", nullable = false)
 	private String email;
 
-	@Column(name="senha", nullable=false)
+	@Column(name = "senha", nullable = false)
 	private String senha;
 
-	@Column(name="cpf", nullable=false)
+	@Column(name = "cpf", nullable = false)
 	private String cpf;
 
-	@Column(name="valor_hora", nullable=true)
+	@Column(name = "valor_hora", nullable = true)
 	private BigDecimal valorHora;
 
-	@Column(name="qtd_horas_trabalho_dia", nullable=true)
+	@Column(name = "qtd_horas_trabalho_dia", nullable = true)
 	private Float qtdHorasTrabalhadaDia;
 
-	@Column(name="qtd_horas_almoco", nullable=true)
+	@Column(name = "qtd_horas_almoco", nullable = true)
 	private Float qtdHorasAlmoco;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="perfil", nullable=false)
+	@Column(name = "perfil", nullable = false)
 	private PerfilEnum perfil;
 
-	@Column(name="data_criacao", nullable=false)
+	@Column(name = "data_criacao", nullable = false)
 	private Date dataCriacao;
 
-	@Column(name="data_atualizacao", nullable=false)
+	@Column(name = "data_atualizacao", nullable = false)
 	private Date dataAtualizacao;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Empresa empresa;
 
-	@OneToMany(mappedBy="funcionario", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Lancamento> lancamento;
 
 	public Funcionario() {
@@ -119,7 +119,7 @@ public class Funcionario implements Serializable{
 	}
 
 	@Transient
-	public Optional<BigDecimal> getValorHoraOpt(){
+	public Optional<BigDecimal> getValorHoraOpt() {
 		return Optional.ofNullable(this.valorHora);
 	}
 
@@ -132,7 +132,7 @@ public class Funcionario implements Serializable{
 	}
 
 	@Transient
-	public Optional<Float> getQtdHorasTrabalhadaDiaOpt(){
+	public Optional<Float> getQtdHorasTrabalhadaDiaOpt() {
 		return Optional.ofNullable(this.qtdHorasTrabalhadaDia);
 	}
 
@@ -142,6 +142,11 @@ public class Funcionario implements Serializable{
 
 	public Float getQtdHorasAlmoco() {
 		return this.qtdHorasAlmoco;
+	}
+
+	@Transient
+	public Optional<Float> getQtdHorasAlmocoOpt() {
+		return Optional.ofNullable(this.qtdHorasAlmoco);
 	}
 
 	public void setQtdHorasAlmoco(Float qtdHorasAlmoco) {
