@@ -28,6 +28,9 @@ import com.ericosouza.pontointeligente.api.services.EmpresaService;
 @ActiveProfiles("test")
 public class EmpresaControllerTest {
 
+	/**
+	 * container web que permite fazer requisições http no teste
+	 */
 	@Autowired
 	private MockMvc mvc;
 
@@ -44,7 +47,10 @@ public class EmpresaControllerTest {
 	public void testBuscarEmpresaCnpjInvalido() throws Exception {
 		BDDMockito.given(this.empresaService.buscarPorCnpj(Matchers.anyString())).willReturn(Optional.empty());
 
-		this.mvc.perform(MockMvcRequestBuilders.get(EmpresaControllerTest.BUSCAR_EMPRESA_CNPJ_URL + EmpresaControllerTest.CNPJ).accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isBadRequest()).andExpect(MockMvcResultMatchers.jsonPath("$.errors").value("Empresa não encontrada para o CNPJ " + EmpresaControllerTest.CNPJ));
+		this.mvc.perform(MockMvcRequestBuilders.get(EmpresaControllerTest.BUSCAR_EMPRESA_CNPJ_URL + EmpresaControllerTest.CNPJ).accept(MediaType.APPLICATION_JSON))
+			.andExpect(MockMvcResultMatchers.status().isBadRequest())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.errors")
+					.value("Empresa não encontrada para o CNPJ " + EmpresaControllerTest.CNPJ));
 	}
 
 	@Test
@@ -52,8 +58,12 @@ public class EmpresaControllerTest {
 	public void testBuscarEmpresaCnpjValido() throws Exception {
 		BDDMockito.given(this.empresaService.buscarPorCnpj(Matchers.anyString())).willReturn(Optional.of(this.obterDadosEmpresa()));
 
-		this.mvc.perform(MockMvcRequestBuilders.get(EmpresaControllerTest.BUSCAR_EMPRESA_CNPJ_URL + EmpresaControllerTest.CNPJ).accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.jsonPath("$.data.id").value(EmpresaControllerTest.ID)).andExpect(MockMvcResultMatchers.jsonPath("$.data.razaoSocial", CoreMatchers.equalTo(EmpresaControllerTest.RAZAO_SOCIAL)))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.data.cnpj", CoreMatchers.equalTo(EmpresaControllerTest.CNPJ))).andExpect(MockMvcResultMatchers.jsonPath("$.errors").isEmpty());
+		this.mvc.perform(MockMvcRequestBuilders.get(EmpresaControllerTest.BUSCAR_EMPRESA_CNPJ_URL + EmpresaControllerTest.CNPJ).accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.data.id").value(EmpresaControllerTest.ID))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.data.razaoSocial", CoreMatchers.equalTo(EmpresaControllerTest.RAZAO_SOCIAL)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.data.cnpj", CoreMatchers.equalTo(EmpresaControllerTest.CNPJ)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.errors").isEmpty());
 	}
 
 	private Empresa obterDadosEmpresa() {
