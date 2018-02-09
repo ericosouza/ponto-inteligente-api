@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +35,23 @@ public class FuncionarioController {
 	@Autowired
 	private FuncionarioService funcionarioService;
 
-	public ResponseEntity<Response<FuncionarioDto>> atualizar(@PathVariable("id") Long id, @Valid @RequestBody FuncionarioDto funcionarioDto, BindingResult result) throws NoSuchAlgorithmException {
+	public FuncionarioController() {
+	}
+
+	/**
+	 * Atualiza os dados de um funcionário.
+	 *
+	 * @param id
+	 * @param funcionarioDto
+	 * @param result
+	 * @return ResponseEntity<Response<FuncionarioDto>>
+	 * @throws NoSuchAlgorithmException
+	 */
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Response<FuncionarioDto>> atualizar(@PathVariable("id") Long id,
+			@Valid @RequestBody FuncionarioDto funcionarioDto,
+			BindingResult result) throws NoSuchAlgorithmException {
+
 		FuncionarioController.log.info("Atualizando funcionário: {}", funcionarioDto.toString());
 		Response<FuncionarioDto> response = new Response<FuncionarioDto>();
 
