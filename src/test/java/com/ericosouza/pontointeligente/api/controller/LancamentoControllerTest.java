@@ -59,8 +59,13 @@ public class LancamentoControllerTest {
 		BDDMockito.given(this.funcionarioService.buscarPorId(Matchers.anyLong())).willReturn(Optional.of(new Funcionario()));
 		BDDMockito.given(this.lancamentoService.persistir(Matchers.any(Lancamento.class))).willReturn(lancamento);
 
-		this.mvc.perform(MockMvcRequestBuilders.post(LancamentoControllerTest.URL_BASE).content(this.obterJsonRequisicaoPost()).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.jsonPath("$.data.id").value(LancamentoControllerTest.ID_LANCAMENTO)).andExpect(MockMvcResultMatchers.jsonPath("$.data.tipo").value(LancamentoControllerTest.TIPO))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.data.data").value(this.dateFormat.format(LancamentoControllerTest.DATA))).andExpect(MockMvcResultMatchers.jsonPath("$.data.funcionarioId").value(LancamentoControllerTest.ID_FUNCIONARIO)).andExpect(MockMvcResultMatchers.jsonPath("$.errors").isEmpty());
+		this.mvc.perform(MockMvcRequestBuilders.post(LancamentoControllerTest.URL_BASE).content(this.obterJsonRequisicaoPost()).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+			.andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.data.id").value(LancamentoControllerTest.ID_LANCAMENTO))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.data.tipo").value(LancamentoControllerTest.TIPO))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.data.data").value(this.dateFormat.format(LancamentoControllerTest.DATA)))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.data.funcionarioId").value(LancamentoControllerTest.ID_FUNCIONARIO))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.errors").isEmpty());
 	}
 
 	@Test

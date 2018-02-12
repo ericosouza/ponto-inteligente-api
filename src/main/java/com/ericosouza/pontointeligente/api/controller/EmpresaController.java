@@ -1,5 +1,7 @@
 package com.ericosouza.pontointeligente.api.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -32,6 +34,7 @@ public class EmpresaController {
 
 	/**
 	 * Retorna uma empresa dado um CNPJ.
+	 * teltelecomunicacao.com.br/api/usuario/idtel/123123
 	 *
 	 * @param cnpj
 	 * @return ResponseEntity<Response<EmpresaDto>>
@@ -39,16 +42,37 @@ public class EmpresaController {
 	@GetMapping(value = "/cnpj/{cnpj}")
 	public ResponseEntity<Response<EmpresaDto>> buscarPorCnpj(@PathVariable("cnpj") String cnpj) {
 		EmpresaController.log.info("Buscando empresa por CNPJ: {}", cnpj);
+
 		Response<EmpresaDto> response = new Response<EmpresaDto>();
+
 		Optional<Empresa> empresa = this.empresaService.buscarPorCnpj(cnpj);
 
+		if (null == empresa) {
+
+		}
+
 		if (!empresa.isPresent()) {
-			EmpresaController.log.info("Empresa naão encontrada para o CNPJ: {}", cnpj);
+			EmpresaController.log.info("Empresa nao encontrada para o CNPJ: {}", cnpj);
 			response.getErrors().add("Empresa não encontrada para o CNPJ " + cnpj);
 			return ResponseEntity.badRequest().body(response);
 		}
 
 		response.setData(this.converterEmpresaDto(empresa.get()));
+		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("/listar")
+	public ResponseEntity<List<EmpresaDto>> listar() {
+
+		List<Empresa> empresas = this.empresaService.listarTodas();
+		List<EmpresaDto> response = new ArrayList<EmpresaDto>();
+
+		for (Empresa empresa : empresas) {
+			EmpresaDto dto = new EmpresaDto();
+			dto = this.converterEmpresaDto(empresa);
+			response.add(dto);
+		}
+
 		return ResponseEntity.ok(response);
 	}
 
