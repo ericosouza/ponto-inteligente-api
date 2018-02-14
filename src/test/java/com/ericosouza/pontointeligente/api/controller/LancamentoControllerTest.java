@@ -53,7 +53,7 @@ public class LancamentoControllerTest {
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	@Test
-	@WithMockUser
+	@WithMockUser//com essa anotacao o teste nao vai falhar, por causa da autenticacao
 	public void testCadastrarLancamento() throws Exception {
 		Lancamento lancamento = this.obterDadosLancamento();
 		BDDMockito.given(this.funcionarioService.buscarPorId(Matchers.anyLong())).willReturn(Optional.of(new Funcionario()));
